@@ -1,0 +1,58 @@
+# ---------- Terraform (keep lock file) ----------
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+terraform.tfstate.d/
+.terraform.tfstate.lock.info
+!.terraform.lock.hcl
+
+# ---------- Sensitive vars ----------
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+
+# ---------- Lambda/Glue build artifacts ----------
+# Your source files (e.g., lambda_src_trigger_glue.py, glue_scripts_etl_transform.py) are kept.
+# Zip bundles and build output are ignored.
+**/build/**
+**/dist/**
+**/*.zip
+**/*.whl
+**/*.egg-info/
+
+# ---------- Logs & generated data ----------
+*.log
+logs/
+**/logs/**
+*.tmp
+*.csv
+*.parquet
+*.jsonl
+*.json.gz
+
+# ---------- Secrets & credentials ----------
+*.pem
+*.key
+*.pfx
+*.cer
+*.crt
+*.csr
+.env
+.env.*
+
+# ---------- Python ----------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# ---------- IDE/OS ----------
+.vscode/
+*.code-workspace
+.idea/
+.DS_Store
+Thumbs.db
