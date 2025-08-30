@@ -2,25 +2,43 @@
 A log analysis pipeline where raw JSON logs land in an S3 raw bucket and an S3 event notification invokes a Lambda. The Lambda starts an AWS Glue ETL job. Glue reads the raw files, transforms and partitions them (e.g., by date/hour), writes curated outputs to S3 clean/, and updates the Glue Data Catalog so the data is queryable. CloudWatch captures logs/metrics. All resources (S3, Lambda, IAM, Glue job & Catalog, notifications, basic monitoring) are defined in this repo’s Terraform.
 
 # Repo Layout
-.
-├─ build/                         # packaged artifacts (e.g., trigger_glue.zip)
-├─ .gitattributes
-├─ .terraform.lock.hcl            # provider lock (commit this)
-├─ catalog.tf                     # Glue Data Catalog DB/Tables
-├─ ddb.tf                         # DynamoDB table for Lambda de-duplication
-├─ git_ignore.gitignore           # rename to .gitignore (see note below)
-├─ glue_job.tf                    # Glue job definition
-├─ glue_scripts_etl_transform.py  # Glue ETL script (source)
-├─ iam.tf                         # IAM roles & policies (Lambda, Glue, etc.)
-├─ lambda_src_trigger_glue.py     # Lambda handler (source)
-├─ lambda.tf                      # Lambda function, permissions, packaging
-├─ log_gen.py                     # (optional) local log generator for testing
-├─ monitoring.tf                  # CloudWatch: log groups/alarms (if any)
-├─ outputs.tf                     # Terraform outputs
-├─ providers.tf                   # Terraform providers & backends
-├─ s3_notifications.tf            # S3 → event → Lambda (or EventBridge) wiring
-├─ S3.tf                          # S3 buckets (raw, clean, code)
-└─ variables.tf                   # all configurable inputs
+Repo Layout
+
+build/ — Packaged artifacts (e.g., trigger_glue.zip). Usually git-ignored.
+
+.gitattributes — Optional text/line-ending settings.
+
+.terraform.lock.hcl — Provider lock file (commit this).
+
+catalog.tf — Glue Data Catalog database and tables.
+
+ddb.tf — DynamoDB table for Lambda de-duplication.
+
+git_ignore.gitignore — Rename to .gitignore so Git respects it.
+
+glue_job.tf — AWS Glue job definition.
+
+glue_scripts_etl_transform.py — Glue ETL script (source).
+
+iam.tf — IAM roles and policies for Lambda/Glue/etc.
+
+lambda_src_trigger_glue.py — Lambda handler (source).
+
+lambda.tf — Lambda function, permissions, and packaging.
+
+log_gen.py — Optional local log generator for testing.
+
+monitoring.tf — CloudWatch log groups and optional alarms.
+
+outputs.tf — Terraform outputs.
+
+providers.tf — Terraform provider (and optional backend) config.
+
+s3_notifications.tf — S3 event/EventBridge wiring to trigger Lambda.
+
+S3.tf — S3 buckets (raw, clean, code).
+
+variables.tf — Configurable input variables.
 
 # Prerequisites
 - Terraform ≥ 1.5
